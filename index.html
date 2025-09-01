@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Em Construção</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(-45deg, #ff6b6b, #f7d794, #1e90ff, #6a89cc);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        font-family: 'Arial', sans-serif;
+        flex-direction: column;
+        color: #fff;
+        text-align: center;
+    }
+    @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+
+    .construction-icon {
+        font-size: 6em;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        overflow: hidden;
+        border-right: 0.15em solid #fff;
+        white-space: nowrap;
+        width: 0;
+        animation: typing 3s steps(20, end) forwards, blink 0.75s step-end infinite alternate;
+    }
+    @keyframes typing { from { width: 0 } to { width: 17ch } }
+    @keyframes blink { from, to { border-color: transparent } 50% { border-color: #fff } }
+
+    p { font-size: 1.2em; margin-bottom: 20px; }
+    .countdown { font-size: 2em; margin-bottom: 30px; }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 1em;
+        font-weight: bold;
+        color: #fff;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid #fff;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        background: #fff;
+        color: #333;
+        transform: scale(1.1);
+    }
+</style>
+</head>
+<body>
+    <div class="construction-icon">🚧</div>
+    <h1>Em Construção</h1>
+    <p>Nosso site estará disponível em:</p>
+    <div class="countdown" id="countdown">00d 00h 00m 00s</div>
+    <button class="btn" onclick="playSound()">OK, entendi!</button>
+
+    <!-- Efeito sonoro -->
+    <audio id="clickSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+
+<script>
+    // Função para tocar som
+    function playSound() {
+        document.getElementById('clickSound').play();
+        alert('Obrigado por visitar!');
+    }
+
+    // Contagem regressiva
+    const countdownElement = document.getElementById('countdown');
+    // Defina a data de lançamento (ano, mês-1, dia, hora, minuto, segundo)
+    const launchDate = new Date(new Date().getTime() + 5*24*60*60*1000); // 5 dias a partir de agora
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = launchDate - now;
+        if(diff <= 0) {
+            countdownElement.innerHTML = "Lançado!";
+            clearInterval(interval);
+            return;
+        }
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+        const seconds = Math.floor((diff % (1000*60)) / 1000);
+        countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+</body>
+</html>
